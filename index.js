@@ -2,14 +2,13 @@ require("dotenv").config();
 const {postRouter} = require(".//allRouters/postRouter");
 const { connection } = require("./config/db");
 const { userRouer } = require("./allRouters/userRouter");
-const cookieParser = require("cookie-parser");
 
 const express = require("express");
 
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser());
+
 
 app.use("/user", userRouer);
 app.use("/post",postRouter)
