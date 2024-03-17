@@ -22,7 +22,25 @@ userRouer.post("/signup", async (req, res) => {
   }
 });
 
+userRouer.post("/login", async (req, res) => {
+  console.log(req.body)
+  try {
+    let user = await userModel.findOne({ email: req.body.email });
+    console.log(user);
+    if (user) {
+      if (await bcrypt.compare(req.body.password, user.password)) {
 
+        res.send({msg: "user login successful"})
+      } else {
+        res.status(406).json({ err: `user password is worng..` });
+      }
+    } else {
+      res.status(406).json({ err: `user email is worng..` });
+    }
+  } catch (err) {
+    res.status(500).send({ err: err.message });
+  }
+});
 //----------------Functions Here -----------------------------------
 
 function token_Genretor(res, name, id) {
